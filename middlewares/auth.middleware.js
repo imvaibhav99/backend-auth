@@ -30,6 +30,7 @@ export const isAuthenticated= catchAsync(async(req ,res ,next)=>{
 
         }
         catch(error){
+            //error handler for invalid token or expired token
               if (error.name === "JsonWebTokenError") {
       throw new AppError("Invalid token. Please log in again.", 401);
     }

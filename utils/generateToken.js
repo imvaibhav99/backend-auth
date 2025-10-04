@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 
 export const generateToken= (res,user,message)=>{
+
+    //user id is embedded in the token along with the secret key and expiry time of 1d
   const token = jwt.sign( {id: user._id}, process.env.JWT_SECRET,{
     expiresIn: '1d'
   })
@@ -12,7 +14,7 @@ export const generateToken= (res,user,message)=>{
     })  
     .json({
         success: true,
-        message,
+        message:"User created successfully",
         user
     })
 }

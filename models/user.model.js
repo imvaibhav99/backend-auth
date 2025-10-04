@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import crypto from "crypto";
 
 const userSchema= new mongoose.Schema({
     firstname:{
@@ -50,9 +52,35 @@ const userSchema= new mongoose.Schema({
         type: String,
         maxLength: [200,"Bio must be less than 200 characters"],
         default: ""
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
    
 },{timestamps:true});
+
+//hash the password before saving the user into the database
+userSchema.pre('save', async function(next){
+    if(!this.isModified('password')){
+        return next();
+    }
+    this.password= await bcrypt.hash(this.password,12);
+    next();
+
+})
+
+//compare password token for authenticating during the login
+// compares the passowrd with the one saved in the database for login
+userSchema.methods.comparePassword= async function(enteredPassword){
+    return await bcrypt.compare(enteredPassword,this.password);
+}
+
+//reset password token for forgot password
+userSchema.methods.getResetPasswordToken= function(){
+    const resetToken= crypto.randomBytes(20).toString("hex");
+    this.resetPasswordToken= crypto.createHash("sha256").update(resetToken).digest("hex");
+    this.resetPasswordExpire= Date.now() + 15*60*1000;
+    return resetToken;
+}
 
 export const userModel= mongoose.model("User",userSchema)
 
