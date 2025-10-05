@@ -23,7 +23,7 @@ class DatabaseConnection {
         });
 
         mongoose.connection.on('disconnected', () => {
-            console.log('⚠️ MongoDB disconnected');
+            console.log(' MongoDB disconnected');
             this.isConnected = false;
             this.handleDisconnection();
         });

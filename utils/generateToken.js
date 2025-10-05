@@ -15,6 +15,6 @@ export const generateToken= (res,user,message)=>{
     .json({
         success: true,
         message:"User created successfully",
-        user
+        user    //token and the user data is sent back to the user
     })
 }

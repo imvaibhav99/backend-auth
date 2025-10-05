@@ -4,7 +4,7 @@
 
 4. Plan the model and create the userSchema and export the model.
 
-# this->it is the object for an object, instance for an instance. Arrow functions don't have their own this,so avoid arrow function where this is required :
+# this->it is the object for an object, instance for an schema. Arrow functions don't have their own this,so avoid arrow function where this is required :
 <!-- userSchema.methods.checkPassword = function (enteredPassword) {
   return this.password === enteredPassword;
 }; -->
