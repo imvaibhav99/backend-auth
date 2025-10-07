@@ -7,6 +7,7 @@ import hpp from "hpp";
 import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import userRoute from "./routes/user.route.js";
 
 
 
@@ -59,7 +60,7 @@ app.use(
 );
 
 //Routes
-app.use("api/v1/user",userRoute); //creating the version 1 for the user route
+app.use("/api/v1/user",userRoute); //creating the version 1 for the user route
 
 
 

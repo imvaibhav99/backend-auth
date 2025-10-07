@@ -24,7 +24,6 @@ const userSchema= new mongoose.Schema({
     username:{
         type: String,
         required: [true,"Username is required"],
-        trim: true,
         unique: true,
         trim: true,
         lowercase: true,
@@ -46,7 +45,7 @@ const userSchema= new mongoose.Schema({
         type:String,
         required: [true,"Password is required"],
         minLength:[6,"Password must be at least 6 characters"],
-        select:false //to not return the password when querying the user
+        select:false  //to not return the password when querying the user,but returns when creating or updating the user
     },
     bio:{
         type: String,
@@ -82,5 +81,5 @@ userSchema.methods.getResetPasswordToken= function(){
     return resetToken;
 }
 
-export const userModel= mongoose.model("User",userSchema)
+export const User= mongoose.model("User",userSchema)
 
