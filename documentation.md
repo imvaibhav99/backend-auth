@@ -9,3 +9,8 @@
   return this.password === enteredPassword;
 }; -->
 
+
+
+
+
+# for websockets: inntall http and socket.io client

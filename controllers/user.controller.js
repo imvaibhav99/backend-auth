@@ -58,3 +58,52 @@ export const logoutUser= catchAsync(async(req,res)=>{
 })
 
 //fetching the user profile 
+export const getCurrentUserProfile= catchAsync(async(req,res)=>{
+
+    const user= await User.findById(req.user.id); //req.user is set in the auth.middleware.js file
+    if(!user){
+        throw new AppError("User not found in the database",404);
+    }
+    res.status(200).json({
+        success:true,
+        user
+    })
+});
+
+export const updateUserProfile= catchAsync(async(req,res)=>{
+
+    const {firstname,lastname,username,bio}= req.body;
+    const userId=req.user.id;
+
+    const user = await User.findById(userId);
+    if(!user){
+        throw new AppError("User not found in the database",404);
+    }
+
+     if (firstname) user.firstname = firstname;
+    if (lastname) user.lastname = lastname;
+    if (username) user.username = username;
+    if (bio) user.bio = bio;
+
+    await user.save();
+
+    res.status(200).json({
+        success: true,
+        user,
+        message: "Profile updated successfully"
+    })
+})
+
+// Fetch all users except current user
+export const getAllUsers = catchAsync(async (req, res) => {
+    const currentUserId = req.user.id;
+
+    const users = await User.find({ _id: { $ne: currentUserId } }).select(
+        "firstname lastname username email bio"
+    );
+
+    res.status(200).json({
+        success: true,
+        users,
+    });
+});

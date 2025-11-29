@@ -1,8 +1,9 @@
 //verification of login password with the hashed password at each route
 import jwt from 'jsonwebtoken';
-import User from '../models/user.model.js';
-import { catchAsync } from './error.middleware';
+import {User} from '../models/user.model.js';
+import { catchAsync } from './error.middleware.js';
 import { AppError } from './error.middleware.js';
+
 
 export const isAuthenticated= catchAsync(async(req ,res ,next)=>{
         const token= req.cookies.token; //catch the token from the browser cookies
@@ -41,4 +42,5 @@ export const isAuthenticated= catchAsync(async(req ,res ,next)=>{
 
         }
 })
+
 
